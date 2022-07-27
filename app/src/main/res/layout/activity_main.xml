@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gang.rvcardgallery.MainActivity">
+    tools:context="com.gang.rvcardgallery.ui.MainActivity">
 
     <ImageView
         android:id="@+id/blurView"
@@ -14,7 +14,7 @@
         android:background="#3f000000"
         android:scaleType="centerCrop"/>
 
-    <com.gang.library.SpeedRecyclerView
+    <com.gang.gallery.SpeedRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

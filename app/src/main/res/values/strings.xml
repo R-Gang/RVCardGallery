@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">RVCardGallery</string>
+
+    <string name="main_btn1">倒计时动画1</string>
+    <string name="main_btn2">倒计时动画2</string>
+    <string name="main_btn3">加载图片1</string>
+    <string name="main_btn4">加载图片2</string>
+    <string name="main_btn5">长按取词</string>
+    <string name="main_btn6">画廊</string>
+
+
 </resources>

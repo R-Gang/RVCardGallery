@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="10dp">
+
+        <com.gang.rvcardgallery.widget.FitImageView
+            android:id="@+id/image2"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:scaleType="matrix"
+            android:maxHeight="2000dp"
+            android:maxWidth="2000dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pic2"/>
+
+        <com.gang.rvcardgallery.widget.FitImageView
+            android:id="@+id/image3"
+            android:layout_marginTop="10dp"
+            android:scaleType="matrix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pic4"/>
+
+        <com.gang.rvcardgallery.widget.FitImageView
+            android:id="@+id/image1"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:src="@drawable/pic1"/>
+
+    </LinearLayout>
+</ScrollView>

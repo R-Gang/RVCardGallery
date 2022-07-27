@@ -1,6 +1,5 @@
-package com.gang.rvcardgallery
+package com.gang.rvcardgallery.ui
 
-import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -8,14 +7,15 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gang.library.CardScaleHelper
-import com.gang.util.BlurBitmapUtils
+import com.gang.gallery.CardScaleHelper
+import com.gang.imageloader.java.BlurBitmapUtils
+import com.gang.rvcardgallery.R
 import com.gang.util.ViewSwitchUtils
-import java.util.*
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private var mRecyclerView: RecyclerView? = null
     private var mBlurView: ImageView? = null
@@ -26,11 +26,11 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val decorView: View = getWindow().getDecorView()
+            val decorView: View = window.decorView
             val option = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
             decorView.systemUiVisibility = option
-            getWindow().setStatusBarColor(Color.TRANSPARENT)
+            window.statusBarColor = Color.TRANSPARENT
         }
         setContentView(R.layout.activity_main)
         init()
@@ -49,12 +49,14 @@ class MainActivity : Activity() {
         // mRecyclerView绑定scale效果
         mCardScaleHelper = CardScaleHelper()
         mCardScaleHelper?.currentItemPos = 2
-        mCardScaleHelper?.attachToRecyclerView(mRecyclerView!!)
+        mRecyclerView?.apply {
+            mCardScaleHelper?.attachToRecyclerView(this)
+        }
         initBlurBackground()
     }
 
     private fun initBlurBackground() {
-        mBlurView = findViewById<View>(R.id.blurView) as ImageView?
+        mBlurView = findViewById<ImageView>(R.id.blurView)
         mRecyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -67,15 +69,20 @@ class MainActivity : Activity() {
     }
 
     private fun notifyBackgroundChange() {
-        if (mLastPos == mCardScaleHelper?.currentItemPos) return
-        mLastPos = mCardScaleHelper?.currentItemPos!!
-        val resId = mList[mCardScaleHelper?.currentItemPos!!]
-        mBlurView!!.removeCallbacks(mBlurRunnable)
-        mBlurRunnable = Runnable {
-            val bitmap: Bitmap = BitmapFactory.decodeResource(getResources(), resId)
-            ViewSwitchUtils.startSwitchBackgroundAnim(mBlurView, BlurBitmapUtils.getBlurBitmap(
-                mBlurView!!.context, bitmap, 15))
+        mCardScaleHelper?.apply {
+            if (mLastPos == currentItemPos) return
+            mLastPos = currentItemPos
+            val resId = mList[currentItemPos]
+            mBlurView?.removeCallbacks(mBlurRunnable)
+            mBlurRunnable = Runnable {
+                val bitmap: Bitmap = BitmapFactory.decodeResource(getResources(), resId)
+                mBlurView?.apply {
+                    ViewSwitchUtils.startSwitchBackgroundAnim(this,
+                        BlurBitmapUtils.getBlurBitmap(
+                            mBlurView?.context, bitmap, 15))
+                }
+            }
+            mBlurView?.postDelayed(mBlurRunnable, 500)
         }
-        mBlurView!!.postDelayed(mBlurRunnable, 500)
     }
 }

@@ -27,6 +27,13 @@ android {
         //启用renderscript
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true    // Enable RS support
+
+        // Java开发的情况
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     compileOptions {
@@ -80,12 +87,19 @@ static def releaseTime() {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*arr'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.cardview:cardview:1.0.0@aar'
     implementation 'junit:junit:4.12'
+    // Dex处理
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0@aar'
+
+    implementation 'com.github.R-Gang:Image-loader:v1.0.0-beta@aar'
+
     implementation project(':gallery')
 
-    implementation 'com.jcodecraeer:xrecyclerview:1.6.0'
-
-    // 基类(以上为基类关联依赖)
-    implementation 'com.github.R-Gang:Android-Common:v0.1.5-beta.13.1@aar'
 }
